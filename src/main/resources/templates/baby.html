@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Moments</title>
+</head>
+<body>
+<div id="moments-container">
+    <div th:each="moment : ${moments}">
+        <div>
+            <h3 th:text="${moment.momentId}">Moment Title</h3>
+            <p th:text="${moment.content}">Moment Content</p>
+            <a th:href="${moment.url}">用户详情</a>
+        </div>
+    </div>
+</div>
+
+<div id="load-more"></div>
+
+<script>
+    let lastMomentId = '0';  // 初始化
+    let isLoading = false;
+
+    // 观察者用于实现懒加载
+    const observer = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && !isLoading) {
+            loadMoreMoments();
+        }
+    });
+
+    observer.observe(document.querySelector('#load-more'));
+
+    function loadMoreMoments() {
+        isLoading = true;
+        fetch(`/baby/moments?lastMomentId=${lastMomentId}`)
+            .then(response => response.json())
+            .then(data => {
+                const momentsContainer = document.getElementById('moments-container');
+                data.moments.forEach(moment => {
+                    const momentDiv = document.createElement('div');
+                    momentDiv.innerHTML = `
+                            <h3 th:text="${moment.momentId}">Moment Title</h3>
+                            <p th:text="${moment.content}">Moment Content</p>
+                            <a th:href="${moment.url}">用户详情</a>
+                        `;
+                    momentsContainer.appendChild(momentDiv);
+                });
+                lastMomentId = data.moments[data.moments.length - 1].momentId;
+                isLoading = false;
+            });
+    }
+</script>
+</body>
+</html>
