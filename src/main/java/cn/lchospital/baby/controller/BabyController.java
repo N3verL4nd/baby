@@ -39,8 +39,15 @@ public class BabyController {
 
     @GetMapping(value = "/moments")
     public ModelAndView moments(ModelAndView mv, @RequestParam(value = "lastMomentId", required = false, defaultValue = "0") String lastMomentId) {
-        mv.addObject("moments", babyService.getMoments(lastMomentId));
+        mv.addObject("moments", babyService.getMoments(lastMomentId, 1));
         mv.setViewName("baby");
         return mv;
+    }
+
+
+    @GetMapping(value = "/momentList")
+    public ApiResult<?> momentList(@RequestParam(value = "lastMomentId", required = false, defaultValue = "0") String lastMomentId,
+                                @RequestParam(value = "momentCategory", required = false, defaultValue = "1") Integer momentCategory) {
+        return ApiResult.wrapSuccess(babyService.getMoments(lastMomentId, momentCategory));
     }
 }

@@ -18,6 +18,8 @@ public class CustomProperties {
 
     private String unionId;
 
+    private String instId;
+
     public CustomProperties() {
     }
 
@@ -35,5 +37,13 @@ public class CustomProperties {
 
     public void setUnionId(String unionId) {
         this.unionId = unionId;
+    }
+
+    public String getInstId() {
+        return instId;
+    }
+
+    public void setInstId(String instId) {
+        this.instId = instId;
     }
 }

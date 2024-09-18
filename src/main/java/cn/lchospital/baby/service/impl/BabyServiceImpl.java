@@ -3,6 +3,7 @@ package cn.lchospital.baby.service.impl;
 import cn.lchospital.baby.config.CustomProperties;
 import cn.lchospital.baby.dto.*;
 import cn.lchospital.baby.service.BabyService;
+import cn.lchospital.baby.utils.DateUtil;
 import cn.lchospital.baby.utils.JsonUtils;
 import cn.lchospital.baby.vo.MediaVo;
 import cn.lchospital.baby.vo.MomentVo;
@@ -28,6 +29,7 @@ public class BabyServiceImpl implements BabyService {
     private static final String TEACHER_LIST_URL = "https://kid-app-api.ancda.com/v1/contact/staffs";
     private static final String CHOICE_STUDENT_URL = "https://kid-app-api.ancda.com/v1/auth/students/{studentId}/choice";
     private static final String MOMENTS_URL = "https://kid-app-api.ancda.com/v1/moments/list";
+    private static final String MOMENT_H5_URL = "https://baby-mobile.ancda.com/moment/detail?instId=";
 
     @Autowired
     private RestTemplate restTemplate;
@@ -155,7 +157,7 @@ public class BabyServiceImpl implements BabyService {
     }
 
     @Override
-    public List<MomentVo> getMoments(String lastMomentId) {
+    public List<MomentVo> getMoments(String lastMomentId, Integer momentCategory) {
         List<MomentVo> res = new ArrayList<>();
 
         if (StringUtils.isEmpty(token)) {
@@ -164,7 +166,8 @@ public class BabyServiceImpl implements BabyService {
 
         // 创建要发送的Map对象
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("momentCategory", 1);
+        // 班级动态: 1 班级圈: 2
+        requestBody.put("momentCategory", momentCategory);
         requestBody.put("lastMomentId", lastMomentId);
 
         // 设置请求头
@@ -190,7 +193,8 @@ public class BabyServiceImpl implements BabyService {
             momentVo.setUserId(momentDto.getUserId());
             momentVo.setAvatar(momentDto.getAvatar());
             momentVo.setUserName(momentDto.getUserName());
-            momentVo.setUrl("https://baby-mobile.ancda.com/moment/detail?instId=78971410344640563&id=" + momentDto.getMomentId());
+            momentVo.setUrl(MOMENT_H5_URL + customProperties.getInstId() + "&id=" + momentDto.getMomentId());
+            momentVo.setCreateTime(DateUtil.timeStampsToLocalDateTimeStr(momentDto.getCreateTime() * 1000));
 
             if (CollectionUtils.isNotEmpty(momentDto.getMediaDtos())) {
 

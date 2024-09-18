@@ -18,4 +18,5 @@ public class MomentDto {
     private String userId;
     private String userName;
     private String avatar;
+    private Long createTime;
 }

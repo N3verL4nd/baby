@@ -1,54 +1,84 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
 <head>
+    <title>班级动态</title>
     <meta charset="UTF-8">
-    <title>Moments</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // 使用 JavaScript 的 fetch API 进行异步请求
+        async function loadMore() {
+            const lastMomentId = document.getElementById("lastMomentId").value;
+
+            const response = await fetch('/baby/momentList?lastMomentId=' + lastMomentId);
+            const data = await response.json();
+
+            // 获取 moments 列表并添加到表格
+            const moments = data.data;
+            const table = document.getElementById('moments-table-body');
+            moments.forEach(moment => {
+                const row = document.createElement('tr');
+
+
+                const contentCell = document.createElement('td');
+                contentCell.textContent = moment.content;
+
+                const authorCell = document.createElement('td');
+                authorCell.textContent = moment.userName;
+
+                const timeCell = document.createElement('td');
+                timeCell.textContent = moment.createTime;
+
+                const url = document.createElement('td');
+                const link = document.createElement('a'); // 创建 <a> 标签
+                link.textContent = moment.url; // 设置超链接文本
+                link.href = moment.url; // 设置超链接地址 (根据 momentId 生成链接)
+                link.target = '_blank';
+                url.appendChild(link); // 将 <a> 标签添加到 <td> 中
+
+                row.appendChild(contentCell);
+                row.appendChild(authorCell);
+                row.appendChild(timeCell);
+                row.appendChild(url);
+
+                // 将新行添加到表格
+                table.appendChild(row);
+            });
+
+            // 更新隐藏的 lastMomentId
+            if (moments.length > 0) {
+                document.getElementById("lastMomentId").value = moments[moments.length - 1].momentId;
+            }
+        }
+    </script>
 </head>
 <body>
-<div id="moments-container">
-    <div th:each="moment : ${moments}">
-        <div>
-            <h3 th:text="${moment.momentId}">Moment Title</h3>
-            <p th:text="${moment.content}">Moment Content</p>
-            <a th:href="${moment.url}">用户详情</a>
-        </div>
-    </div>
-</div>
+<table>
+    <thead>
+    <tr>
+        <th>内容</th>
+        <th>发布老师</th>
+        <th>创建时间</th>
+        <th>查看内容</th>
+    </tr>
+    </thead>
+    <tbody id="moments-table-body">
+    <!-- 初始 moments 会通过 Thymeleaf 渲染 -->
+    <tr th:each="moment : ${moments}">
+        <td th:text="${moment.content}"></td>
+        <td th:text="${moment.userName}"></td>
+        <td th:text="${moment.createTime}"></td>
+        <td>
+            <a th:href="${moment.url}" target="_blank" th:text="${moment.url}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-<div id="load-more"></div>
+<!-- 隐藏的 input 用于保存 lastMomentId -->
+<input type="hidden" id="lastMomentId" th:value="${moments[moments.size() - 1].momentId}"/>
 
-<script>
-    let lastMomentId = '0';  // 初始化
-    let isLoading = false;
+<!-- "加载更多" 按钮 -->
+<button onclick="loadMore()">加载更多</button>
 
-    // 观察者用于实现懒加载
-    const observer = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && !isLoading) {
-            loadMoreMoments();
-        }
-    });
-
-    observer.observe(document.querySelector('#load-more'));
-
-    function loadMoreMoments() {
-        isLoading = true;
-        fetch(`/baby/moments?lastMomentId=${lastMomentId}`)
-            .then(response => response.json())
-            .then(data => {
-                const momentsContainer = document.getElementById('moments-container');
-                data.moments.forEach(moment => {
-                    const momentDiv = document.createElement('div');
-                    momentDiv.innerHTML = `
-                            <h3 th:text="${moment.momentId}">Moment Title</h3>
-                            <p th:text="${moment.content}">Moment Content</p>
-                            <a th:href="${moment.url}">用户详情</a>
-                        `;
-                    momentsContainer.appendChild(momentDiv);
-                });
-                lastMomentId = data.moments[data.moments.length - 1].momentId;
-                isLoading = false;
-            });
-    }
-</script>
 </body>
 </html>
