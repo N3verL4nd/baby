@@ -149,7 +149,6 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>cn.lchospital.baby.BabyApplication</mainClass>
-                    <skip>true</skip>
                 </configuration>
                 <executions>
                     <execution>
