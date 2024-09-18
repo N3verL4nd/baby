@@ -1037,3 +1037,21 @@ java.lang.IllegalArgumentException: null
 11:08:06.977 [scheduling-1] INFO  c.l.baby.job.RefreshTokenTask - 登录 token 未失效, token: jYTtvyqWNmLOz_SwLTMDO7jrfNk01t4j8sLZUYTkoHM=
 11:09:06.901 [scheduling-1] INFO  c.l.b.service.impl.BabyServiceImpl - 学生信息: {"id":"87712868429987853","name":"李乐宸","avatar":"https://unicorn-media.ancda.com/prod/contactList/2024-08-28/ObYDOikX.png","gender":1,"birthday":"1640448000","entryDate":"1725206400","isLeave":0,"leaveReason":"","leaveTime":"0","classInfo":{"classId":"87708836294557831","className":"小一班","gradeName":"小班","gradeId":"78971413146370154"},"parentList":[{"id":"87712868463542400","relation":1,"name":"李乐宸爸爸","reCode":"86","mobile":"15315773826","isFirst":1,"isActivated":1,"lastLoginTime":"1726627354","avatar":"","imAccountId":"up66ce8b70743b4efd006abecf"},{"id":"87712869050745080","relation":2,"name":"李鸣鸣","reCode":"86","mobile":"17865898796","isFirst":0,"isActivated":1,"lastLoginTime":"1726621923","avatar":"","imAccountId":"up66ce8b70743b4efd006abed0"},{"id":"89172181514190899","relation":6,"name":"李乐宸外婆","reCode":"86","mobile":"15265585363","isFirst":0,"isActivated":1,"lastLoginTime":"1726453369","avatar":"","imAccountId":"up66dbd12a88de848adbfaf364"},{"id":"89900522907107350","relation":3,"name":"李乐宸爷爷","reCode":"86","mobile":"13061084669","isFirst":0,"isActivated":1,"lastLoginTime":"1726628708","avatar":"","imAccountId":"up66e270f788de848adbfb0e2b"}],"cardList":["0002194965"],"studentNumber":"","polyphone":""}
 11:09:06.902 [scheduling-1] INFO  c.l.baby.job.RefreshTokenTask - 登录 token 未失效, token: jYTtvyqWNmLOz_SwLTMDO7jrfNk01t4j8sLZUYTkoHM=
+11:27:23.597 [main] INFO  cn.lchospital.baby.BabyApplication - Starting BabyApplication using Java 1.8.0_202 on pc-lgh with PID 10596 (D:\project\baby\target\classes started by N3verL4nd in D:\project\baby)
+11:27:23.602 [main] INFO  cn.lchospital.baby.BabyApplication - No active profile set, falling back to 1 default profile: "default"
+11:27:24.742 [main] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[cn.lchospital.baby.mapper]' package. Please check your configuration.
+11:27:25.456 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+11:27:25.466 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+11:27:25.466 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+11:27:25.467 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.68]
+11:27:25.674 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+11:27:25.674 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1995 ms
+11:27:26.502 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+11:27:26.658 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+11:27:26.672 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+11:27:26.681 [main] INFO  cn.lchospital.baby.BabyApplication - Started BabyApplication in 3.747 seconds (JVM running for 4.777)
+11:27:27.003 [scheduling-1] INFO  c.l.b.service.impl.BabyServiceImpl - 登录返回结果: {"token":"W3EdL7jCXhq-D3FUoYChL04SFIlkoODxrbp4SaJ9tDY=","instList":[],"studentList":[{"studentId":"87712868429987853","studentName":"李乐宸","avatar":"https://unicorn-media.ancda.com/prod/contactList/2024-08-28/ObYDOikX.png"}]}
+11:27:27.178 [scheduling-1] INFO  c.l.baby.job.RefreshTokenTask - 登录 token 失效，已刷新
+11:27:43.541 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+11:27:43.541 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+11:27:43.543 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms

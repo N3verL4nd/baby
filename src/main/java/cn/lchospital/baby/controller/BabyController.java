@@ -50,4 +50,10 @@ public class BabyController {
                                 @RequestParam(value = "momentCategory", required = false, defaultValue = "1") Integer momentCategory) {
         return ApiResult.wrapSuccess(babyService.getMoments(lastMomentId, momentCategory));
     }
+
+    @GetMapping(value = "/momentsApi", produces = "application/json;charset=UTF-8")
+    public String momentsApi(@RequestParam(value = "lastMomentId", required = false, defaultValue = "0") String lastMomentId,
+                             @RequestParam(value = "momentCategory", required = false, defaultValue = "1") Integer momentCategory) {
+        return babyService.getMomentsApi(lastMomentId, momentCategory);
+    }
 }

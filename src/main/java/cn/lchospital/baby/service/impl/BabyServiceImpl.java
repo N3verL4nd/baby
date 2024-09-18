@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -209,15 +208,34 @@ public class BabyServiceImpl implements BabyService {
 
                     mediaVos.add(mediaVo);
                 }
-
                 momentVo.setMediaVos(mediaVos);
             }
-
-
             res.add(momentVo);
         }
-
         return res;
     }
 
+    @Override
+    public String getMomentsApi(String lastMomentId, Integer momentCategory) {
+        if (StringUtils.isEmpty(token)) {
+            return "";
+        }
+
+        // 创建要发送的Map对象
+        Map<String, Object> requestBody = new HashMap<>();
+        // 班级动态: 1 班级圈: 2
+        requestBody.put("momentCategory", momentCategory);
+        requestBody.put("lastMomentId", lastMomentId);
+
+        // 设置请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", token);
+
+        headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
+
+        // 将Map对象和请求头包装成HttpEntity
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        return restTemplate.postForObject(MOMENTS_URL, requestEntity, String.class);
+    }
 }

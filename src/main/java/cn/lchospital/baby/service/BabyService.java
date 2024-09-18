@@ -18,4 +18,7 @@ public interface BabyService {
     String teacherList();
 
     List<MomentVo> getMoments(String lastMomentId, Integer momentCategory);
+
+
+    String getMomentsApi(String lastMomentId, Integer momentCategory);
 }
